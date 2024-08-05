@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Trainer - P11 Training Bugs</title>
+    <!-- Bootstrap CSS -->
+    <link href="/static/css/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="/static/css/bootstrap/umd/popper.js"></script>
+    <script src="/static/css/bootstrap/js/bootstrap.min.js"></script>
+    <link href="/static/css/bootstrap/font/bootstrap-icons.min.css" rel="stylesheet" />
+</head>
+<body>
+    {% include 'navbar.html' %}
+
+    <div class="container">
+        <div class="my-3">
+            <h2>Add Trainer</h2>
+        </div>
+
+        <form method="post" action="/Trainer/TrainerAddPost">
+            <div class="col-md-6 mb-3 form-floating">
+                <input type="text" id="fn" name="name1" class="form-control" />
+                <label for="fn">First Name:</label>
+            </div>
+
+            <div class="col-md-6 mb-3 form-floating">
+                <input type="text" id="fmn" name="name2" class="form-control" />
+                <label for="fmn">Family Name:</label>
+            </div>
+
+            <input type="submit" class="btn btn-primary" value="Create" />
+
+            {% if message %}
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <div class="alert alert-{{ message_type }}">
+                            <b>Message: </b>{{ message }}<br />
+                            {% if exec_sql %}
+                                <b>SQL: </b>{{ exec_sql }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </form>
+    </div>
+
+    {% include 'footer.html' %}
+</body>
+</html>

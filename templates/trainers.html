@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Trainers - P11 Training Bugs</title>
+    <!-- Bootstrap CSS -->
+    <link href="/static/css/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="/static/css/bootstrap/umd/popper.js"></script>
+    <script src="/static/css/bootstrap/js/bootstrap.min.js"></script>
+    <link href="/static/css/bootstrap/font/bootstrap-icons.min.css" rel="stylesheet" />
+</head>
+<body>
+    {% include 'navbar.html' %}
+
+    <div class="container">
+        <br />
+        <h3>All Trainers</h3>
+        <br />
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% if trainers %}
+            <table class='table table-striped table-hover'>
+                <tr>
+                    <th>First Name</th>
+                    <th>Family Name</th>
+                    <th>Action</th>
+                </tr>
+
+                {% for trainer in trainers %}
+                    <tr>
+                        <td>{{ trainer.first_name }}</td>
+                        <td>{{ trainer.family_name }}</td>
+                        <td>
+                            <a href="{{ url_for('trainer.trainer_edit', id=trainer.trainer_id) }}">
+                                Insert
+                            </a>
+                            |
+                            <a href="{{ url_for('trainer.trainer_delete', id=trainer.trainer_id) }}"
+                               onclick="return confirm('Delete Trainer {{ trainer.first_name }}')">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p class="alert alert-danger">No Trainers found.</p>
+        {% endif %}
+    </div>
+
+    {% include 'footer.html' %}
+</body>
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - P11 Training Bugs</title>
+    <!-- Bootstrap CSS -->
+    <link href="/static/css/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="/static/css/bootstrap/umd/popper.js"></script>
+    <script src="/static/css/bootstrap/js/bootstrap.min.js"></script>
+    <link href="/static/css/bootstrap/font/bootstrap-icons.min.css" rel="stylesheet" />
+</head>
+<body>
+    {% include 'navbar.html' %}
+
+    <div class="container">
+        <br />
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <h1>Privacy Policy</h1>
+
+        <p>Use this page to detail your site's privacy policy.</p>
+    </div>
+
+    {% include 'footer.html' %}
+</body>
+</html>

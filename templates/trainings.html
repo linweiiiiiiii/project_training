@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Trainings - P11 Training Bugs</title>
+    <!-- Bootstrap CSS -->
+    <link href="/static/css/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="/static/css/bootstrap/umd/popper.js"></script>
+    <script src="/static/css/bootstrap/js/bootstrap.min.js"></script>
+    <link href="/static/css/bootstrap/font/bootstrap-icons.min.css" rel="stylesheet" />
+</head>
+<body>
+    {% include 'navbar.html' %}
+
+    <div class="container">
+        <br />
+        <h3>All Trainings</h3>
+        <br />
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        {% if trainings %}
+            <table class='table table-striped table-hover'>
+                <tr>
+                    <th>Subject</th>
+                    <th>Trainer Name</th>
+                    <th>Details</th>
+                    <th>Date of training</th>
+                    <th>Action</th>
+                </tr>
+
+                {% for training in trainings %}
+                    <tr>
+                        <td>{{ training.trainer.first_name }} {{ training.trainer.family_name }}</td>
+                        <td>{{ training.subject.name }}</td>
+                        <td>{{ training.details }}</td>
+                        <td>{{ now.strftime('%Y-%m-%d') }}</td>
+                        <td>
+                            <a href="{{ url_for('training.training_edit', id=training.t_id) }}">
+                                Edit
+                            </a>
+                            |
+                            <a href="{{ url_for('training.training_delete', id=training.t_id) }}"
+                               onclick="return confirm('Delete Training [{{ training.t_id }}]')">
+                                Delete
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p class="alert alert-danger">No Trainings found.</p>
+        {% endif %}
+    </div>
+
+    {% include 'footer.html' %}
+</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Training - P11 Training Bugs</title>
+    <!-- Bootstrap CSS -->
+    <link href="/static/css/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <script src="/static/css/bootstrap/umd/popper.js"></script>
+    <script src="/static/css/bootstrap/js/bootstrap.min.js"></script>
+    <link href="/static/css/bootstrap/font/bootstrap-icons.min.css" rel="stylesheet" />
+</head>
+<body>
+    {% include 'navbar.html' %}
+
+    <div class="container">
+        <div class="my-3">
+            <h2>Edit Training</h2>
+        </div>
+
+        <form method="post" action="{{ url_for('training.training_edit_post') }}">
+            <div class="col-md-6 mb-3 form-floating">
+                <input type="hidden" id="tid" name="TrainingId" class="form-control"
+                       value="{{ training.t_id }}" readonly />
+                <label for="tid">Training ID :</label>
+            </div>
+
+            <div class="col-md-6 mb-3 form-floating">
+                <select class="form-control dropdown" name="SubjectId" id="sbj">
+                    {% for subject in subjects %}
+                        <option value="{{ subject.subject_id }}"
+                                {{ 'selected' if subject.subject_id == training.subject_id else '' }}>
+                            {{ subject.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <label for="sbj">Subject  :</label>
+            </div>
+
+            <div class="col-md-6 mb-3 form-floating">
+                <select class="form-control dropdown" name="MId" id="std">
+                    <option class="col-sm-3" value="">-- SELECT --</option>
+                    {% for trainer in trainers %}
+                        <option value="{{ trainer.trainer_id }}"
+                                {{ 'selected' if trainer.trainer_id == training.trainer_id else '' }}>
+                            {{ trainer.name }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <label for="std">Training :</label>
+            </div>
+
+            <div class="col-md-6 mb-3 form-floating">
+                <input type="text" id="dts" name="Details" class="form-control"
+                       value="{{ training.details }}" />
+                <label for="dts">Details :</label>
+            </div>
+
+            <div class="col-md-6 mb-3 form-floating">
+                <input type="date" id="ds" name="dateTraining" class="form-control"
+                       placeholder="YYYY-MM-DD"
+                       value="{{ training.date_training.strftime('%Y-%m-%d') }}" />
+                <label for="ds">Date Of Training : </label>
+            </div>
+
+            <input type="submit" class="btn btn-primary" value="Update" />
+
+            {% if message %}
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <div class="alert alert-{{ message_type }}">
+                            <b>Message: </b>{{ message }}<br />
+                            {% if exec_sql %}
+                                <b>SQL: </b>{{ exec_sql }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </form>
+    </div>
+
+    {% include 'footer.html' %}
+</body>
+</html>
