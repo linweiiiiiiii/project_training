@@ -32,28 +32,18 @@
                     <th>Trainer (Click to delete)</th>
                     <th>No. of Training sessions</th>
                 </tr>
-                {% set total_trn = namespace(value=0) %}
                 {% for row in summary_data %}
-                    {% set total_trn.value = total_trn.value + row.frequency %}
                     <tr>
                         <td>
-                            <a href="{{ url_for('subject.subject_edit', id=row.tr_id) }}">  
-                                {{ row.first_name }} {{ row.family_name }}
-                            </a>
+                            <form action="{{ url_for('trainer.trainer_delete', id=row.tr_id) }}" method="POST" style="display:inline;">
+                                <button type="submit" class="btn btn-link" style="padding:0; border:none; background:none;">
+                                    {{ row.first_name }} {{ row.family_name }}
+                                </button>
+                            </form>
                         </td>
                         <td>{{ row.frequency }}</td>
-                        <td>{{ row.tr_id }}</td>
                     </tr>
                 {% endfor %}
-                <tr>
-                    <td>
-                        <a href="{{ url_for('trainer.trainer_delete', id=trainer.trainer_id) }}"
-                               onclick="return confirm('Delete Trainer {{ trainer.first_name }}')">
-                            Trainer X
-                        </a>
-                    </td>
-                    <td>27</td>
-                </tr>
             </table>
 
             <h3>Total number of training sessions: {{ training_sessions }}</h3>
