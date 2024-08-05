@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from models import Trainer
 from extensions import db
+from flask import current_app as app
 
 trainer_bp = Blueprint('trainer', __name__)
 
@@ -31,8 +32,7 @@ def trainer_add():
             db.session.rollback()
             message = str(e)
             message_type = "danger"
-            exec_sql = f"INSERT INTO Trainer (first_name, family_name) VALUES ('{first_name}', '{family_name}')"
-            return render_template('trainer_add.html', message=message, message_type=message_type, exec_sql=exec_sql)
+            return render_template('trainer_add.html', message=message, message_type=message_type)
     
     return render_template('trainer_add.html')
 
@@ -58,10 +58,10 @@ def trainer_edit(id):
             return redirect(url_for('trainer.trainers'))
         except Exception as e:
             db.session.rollback()
-            message = str(e)
+            message = "An error occurred while updating the trainer."
             message_type = "danger"
-            exec_sql = f"UPDATE Trainer SET first_name = '{first_name}', family_name = '{family_name}' WHERE trainer_id = {id}"
-            return render_template('trainer_edit.html', trainer=trainer, message=message, message_type=message_type, exec_sql=exec_sql)
+            app.logger.error(f"Error updating trainer {id}: {e}")
+            return render_template('trainer_edit.html', trainer=trainer, message=message, message_type=message_type)
     
     return render_template('trainer_edit.html', trainer=trainer)
 

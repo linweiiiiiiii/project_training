@@ -37,7 +37,7 @@
                     {% set total_trn.value = total_trn.value + row.frequency %}
                     <tr>
                         <td>
-                            <a href="{{ url_for('subject.subject_edit', id=row.tr_id) }}">
+                            <a href="{{ url_for('subject.subject_edit', id=row.tr_id) }}">  
                                 {{ row.first_name }} {{ row.family_name }}
                             </a>
                         </td>
@@ -47,7 +47,8 @@
                 {% endfor %}
                 <tr>
                     <td>
-                        <a href="{{ url_for('trainer.trainer_edit', id=1) }}">
+                        <a href="{{ url_for('trainer.trainer_delete', id=trainer.trainer_id) }}"
+                               onclick="return confirm('Delete Trainer {{ trainer.first_name }}')">
                             Trainer X
                         </a>
                     </td>
